@@ -22,13 +22,56 @@ const ContactPage = () => {
       toast({ title: 'Error', description: 'All fields required.', variant: 'destructive' });
       return;
     }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast({ title: 'Error', description: 'Please enter a valid email address.', variant: 'destructive' });
+      return;
+    }
+
     setSending(true);
-    // TODO: Connect to Lovable Cloud edge function
-    setTimeout(() => {
-      toast({ title: 'Message Sent!', description: 'Thanks for reaching out.' });
-      setName(''); setEmail(''); setMessage('');
+
+    try {
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+      if (!supabaseUrl || !supabaseAnonKey) {
+        throw new Error('Configuration error');
+      }
+
+      const response = await fetch(`${supabaseUrl}/functions/v1/contact-form`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${supabaseAnonKey}`,
+        },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send message');
+      }
+
+      toast({
+        title: 'Message Sent!',
+        description: data.message || 'Thanks for reaching out. I\'ll get back to you soon!'
+      });
+
+      setName('');
+      setEmail('');
+      setMessage('');
+    } catch (error) {
+      console.error('Contact form error:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to send message. Please try again or email directly.',
+        variant: 'destructive'
+      });
+    } finally {
       setSending(false);
-    }, 1000);
+    }
   };
 
   return (

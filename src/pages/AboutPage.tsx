@@ -33,6 +33,22 @@ const AboutPage = () => {
           </h1>
         </motion.div>
 
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
+          className="flex justify-center mb-12"
+        >
+          <div className="relative w-48 h-48 md:w-64 md:h-64">
+            <div className="absolute inset-0 neon-border-cyan rounded-lg pulse-glow" />
+            <img
+              src="/devflex_ai_avatar_optimized.png"
+              alt="DevFlex-AI Avatar"
+              className="w-full h-full object-cover rounded-lg"
+            />
+          </div>
+        </motion.div>
+
         <div className="space-y-6">
           {aboutPoints.map((point, i) => (
             <motion.div
