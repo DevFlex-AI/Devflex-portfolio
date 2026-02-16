@@ -7,22 +7,22 @@ import NeonCard from '@/components/ui/NeonCard';
 const forks = [
   {
     name: 'Open Interpreter',
-    why: 'CLI-first thinking. Local execution. Tool-use philosophy instead of chat toys.',
-    goals: ['Add a retro CLI skin', 'Strip UX bloat', 'Focus on speed + offline workflows'],
+    why: 'CLI-first thinking. Local execution. Tool-use philosophy — a serious sibling to existing chat projects.',
+    goals: ['Retro CLI skin', 'Strip UX bloat', 'Speed + offline workflows'],
   },
   {
     name: 'Continue (AI Coding Assistant)',
-    why: 'Developer-facing AI. IDE-native. Productivity over novelty.',
-    goals: ['Tighten scope', 'Improve local inference support', 'Add opinionated presets'],
+    why: 'Developer-facing AI. IDE-native. Productivity over novelty — pairs perfectly with CodingIT.',
+    goals: ['Tighten scope', 'Local inference support', 'Opinionated presets'],
   },
   {
     name: 'LocalAI',
-    why: 'Open weights. Self-hosted. Performance sensitive.',
-    goals: ['Preset configs', 'Hardware profiles', 'Clean docs'],
+    why: 'Open weights. Self-hosted. Performance sensitive — connects all chat tools to a real backend.',
+    goals: ['Preset configs', 'Hardware profiles', 'Clean documentation'],
   },
   {
     name: 'Stirling-PDF Extensions',
-    why: 'Already showcased. Go one layer deeper.',
+    why: 'Already showcased — going one layer deeper shows endurance, not experimentation.',
     goals: ['Automation pipelines', 'CLI wrapper', 'Batch workflows'],
   },
 ];
@@ -30,31 +30,28 @@ const forks = [
 const ForkStrategyPage = () => (
   <div className="relative min-h-screen">
     <SceneWrapper camera={{ position: [0, 0, 8], fov: 60 }}>
-      <ParticleField count={500} color="#FF00FF" size={0.01} spread={20} speed={0.1} />
+      <ParticleField count={300} color="#8b5cf6" size={0.008} spread={20} speed={0.06} />
       {forks.map((_, i) => (
-        <FloatingGeometry key={i} position={[(i - 1.5) * 2.5, Math.sin(i) * 1.5, -3]} geometry="icosahedron" color={i % 2 === 0 ? '#00FFFF' : '#FF00FF'} size={0.5} speed={0.3} />
+        <FloatingGeometry key={i} position={[(i - 1.5) * 2.5, Math.sin(i) * 1.5, -5]} geometry="icosahedron" color={i % 2 === 0 ? '#3b82f6' : '#8b5cf6'} size={0.35} speed={0.2} />
       ))}
     </SceneWrapper>
-    <div className="relative z-10 max-w-4xl mx-auto px-4 py-20">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-        <span className="font-pixel text-xs text-secondary neon-text-magenta tracking-widest">🧠 STRATEGY</span>
-        <h1 className="font-orbitron font-bold text-3xl md:text-5xl text-foreground mt-4 mb-4">
-          Fork <span className="text-secondary neon-text-magenta">Strategy</span>
+    <div className="relative z-10 max-w-4xl mx-auto px-6 py-24">
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-12">
+        <p className="text-sm font-medium text-secondary mb-3 tracking-wide uppercase">Strategy</p>
+        <h1 className="font-display font-bold text-3xl md:text-5xl text-foreground mb-3 tracking-tight">
+          Fork <span className="gradient-text">Strategy</span>
         </h1>
-        <p className="font-mono text-sm text-muted-foreground mb-12">What to Fork Next — Strategic, Not Random.</p>
+        <p className="text-muted-foreground">Strategic, not random. Owning terrain that aligns with existing work and philosophy.</p>
       </motion.div>
-      <div className="space-y-6">
+      <div className="space-y-4">
         {forks.map((f, i) => (
-          <motion.div key={i} initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 * i }}>
+          <motion.div key={i} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * i }}>
             <NeonCard color={i % 2 === 0 ? 'cyan' : 'magenta'}>
-              <h3 className="font-orbitron font-bold text-lg text-foreground mb-2">{f.name}</h3>
-              <p className="font-mono text-sm text-muted-foreground mb-4">{f.why}</p>
-              <div className="space-y-1">
+              <h3 className="font-display font-semibold text-lg text-foreground mb-2">{f.name}</h3>
+              <p className="text-sm text-muted-foreground mb-4">{f.why}</p>
+              <div className="flex flex-wrap gap-2">
                 {f.goals.map((g, j) => (
-                  <div key={j} className="flex gap-2 items-start">
-                    <span className="text-primary text-xs mt-0.5">→</span>
-                    <span className="font-mono text-xs text-muted-foreground">{g}</span>
-                  </div>
+                  <span key={j} className="text-xs px-2.5 py-1 rounded-md bg-muted text-muted-foreground">{g}</span>
                 ))}
               </div>
             </NeonCard>

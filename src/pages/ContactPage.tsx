@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import { Mail, Github, Send, ArrowUpRight } from 'lucide-react';
 import SceneWrapper from '@/components/3d/SceneWrapper';
 import ParticleField from '@/components/3d/ParticleField';
 import FloatingGeometry from '@/components/3d/FloatingGeometry';
-import NeonCard from '@/components/ui/NeonCard';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
@@ -55,8 +55,8 @@ const ContactPage = () => {
       }
 
       toast({
-        title: 'Message Sent!',
-        description: data.message || 'Thanks for reaching out. I\'ll get back to you soon!'
+        title: 'Message Sent',
+        description: "Thanks for reaching out. I'll get back to you soon."
       });
 
       setName('');
@@ -66,7 +66,7 @@ const ContactPage = () => {
       console.error('Contact form error:', error);
       toast({
         title: 'Error',
-        description: 'Failed to send message. Please try again or email directly.',
+        description: 'Failed to send message. Please try again or email directly at mahirusus@gmail.com',
         variant: 'destructive'
       });
     } finally {
@@ -77,45 +77,107 @@ const ContactPage = () => {
   return (
     <div className="relative min-h-screen">
       <SceneWrapper camera={{ position: [0, 0, 7], fov: 60 }}>
-        <ParticleField count={400} color="#FF00FF" size={0.012} spread={18} speed={0.1} />
-        <FloatingGeometry position={[3, 2, -3]} geometry="torus" color="#00FFFF" size={0.6} speed={0.4} />
-        <FloatingGeometry position={[-3, -1, -4]} geometry="octahedron" color="#FF00FF" size={0.5} speed={0.5} />
+        <ParticleField count={300} color="#8b5cf6" size={0.008} spread={18} speed={0.06} />
+        <FloatingGeometry position={[4, 2, -5]} geometry="torus" color="#3b82f6" size={0.4} speed={0.3} />
+        <FloatingGeometry position={[-3, -1, -6]} geometry="octahedron" color="#8b5cf6" size={0.3} speed={0.4} />
       </SceneWrapper>
-      <div className="relative z-10 max-w-2xl mx-auto px-4 py-20">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <span className="font-pixel text-xs text-secondary neon-text-magenta tracking-widest">📫 TRANSMISSION</span>
-          <h1 className="font-orbitron font-bold text-3xl md:text-5xl text-foreground mt-4 mb-8">
-            Contact <span className="text-secondary neon-text-magenta">Me</span>
-          </h1>
-        </motion.div>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-          <NeonCard color="magenta">
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="font-mono text-xs text-muted-foreground mb-1 block">NAME</label>
-                <Input value={name} onChange={e => setName(e.target.value)} placeholder="Your callsign" className="bg-background border-primary/30 focus:border-primary font-mono text-sm" />
-              </div>
-              <div>
-                <label className="font-mono text-xs text-muted-foreground mb-1 block">EMAIL</label>
-                <Input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="your@email.com" className="bg-background border-primary/30 focus:border-primary font-mono text-sm" />
-              </div>
-              <div>
-                <label className="font-mono text-xs text-muted-foreground mb-1 block">MESSAGE</label>
-                <Textarea value={message} onChange={e => setMessage(e.target.value)} placeholder="Your transmission..." rows={5} className="bg-background border-primary/30 focus:border-primary font-mono text-sm" />
-              </div>
-              <Button type="submit" disabled={sending} className="w-full font-pixel text-xs bg-secondary hover:bg-secondary/80 text-secondary-foreground pulse-glow">
-                {sending ? 'TRANSMITTING...' : 'SEND TRANSMISSION'}
-              </Button>
-            </form>
-          </NeonCard>
-        </motion.div>
+      <div className="relative z-10 max-w-5xl mx-auto px-6 py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          {/* Left: Info */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+            <p className="text-sm font-medium text-primary mb-3 tracking-wide uppercase">Contact</p>
+            <h1 className="font-display font-bold text-3xl md:text-5xl text-foreground mb-6 tracking-tight">
+              Let's build something{' '}
+              <span className="gradient-text">together</span>
+            </h1>
+            <p className="text-muted-foreground leading-relaxed mb-10">
+              Whether you have a project idea, want to collaborate on open-source work, or just want to connect — I'd love to hear from you.
+            </p>
 
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} className="mt-8 text-center">
-          <a href="https://github.com/devflex-ai" target="_blank" rel="noreferrer" className="font-mono text-sm text-primary hover:neon-text-cyan transition-all">
-            github.com/devflex-ai →
-          </a>
-        </motion.div>
+            <div className="space-y-4">
+              <a
+                href="mailto:mahirusus@gmail.com"
+                className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors group"
+              >
+                <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                  <Mail className="w-4 h-4 text-primary" />
+                </div>
+                <div>
+                  <div className="text-foreground font-medium">Email</div>
+                  <div>mahirusus@gmail.com</div>
+                </div>
+                <ArrowUpRight className="w-4 h-4 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
+              </a>
+              <a
+                href="https://github.com/devflex-ai"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors group"
+              >
+                <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                  <Github className="w-4 h-4 text-primary" />
+                </div>
+                <div>
+                  <div className="text-foreground font-medium">GitHub</div>
+                  <div>github.com/devflex-ai</div>
+                </div>
+                <ArrowUpRight className="w-4 h-4 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
+              </a>
+            </div>
+          </motion.div>
+
+          {/* Right: Form */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+            <div className="glass rounded-2xl p-8">
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div>
+                  <label className="text-sm font-medium text-foreground mb-2 block">Name</label>
+                  <Input
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                    placeholder="Your name"
+                    className="bg-background/50 border-border focus:border-primary h-11"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-foreground mb-2 block">Email</label>
+                  <Input
+                    type="email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    placeholder="you@example.com"
+                    className="bg-background/50 border-border focus:border-primary h-11"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-foreground mb-2 block">Message</label>
+                  <Textarea
+                    value={message}
+                    onChange={e => setMessage(e.target.value)}
+                    placeholder="Tell me about your project..."
+                    rows={5}
+                    className="bg-background/50 border-border focus:border-primary resize-none"
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  disabled={sending}
+                  className="w-full h-11 bg-primary text-primary-foreground font-medium rounded-xl hover:opacity-90 transition-opacity"
+                >
+                  {sending ? (
+                    'Sending...'
+                  ) : (
+                    <span className="flex items-center gap-2">
+                      <Send className="w-4 h-4" />
+                      Send Message
+                    </span>
+                  )}
+                </Button>
+              </form>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </div>
   );

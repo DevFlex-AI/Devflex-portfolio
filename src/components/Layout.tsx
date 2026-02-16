@@ -3,9 +3,9 @@ import Navbar from './Navbar';
 
 const Layout = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="min-h-screen bg-background pixel-grid">
+    <div className="min-h-screen bg-background dot-grid">
       <Navbar />
-      <main className="pt-14">
+      <main className="pt-16">
         {children}
       </main>
     </div>

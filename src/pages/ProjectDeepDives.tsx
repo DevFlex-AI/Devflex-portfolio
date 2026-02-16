@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion';
+import { ExternalLink, ArrowLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import SceneWrapper from '@/components/3d/SceneWrapper';
 import ParticleField from '@/components/3d/ParticleField';
 import FloatingGeometry from '@/components/3d/FloatingGeometry';
@@ -6,55 +8,68 @@ import NeonCard from '@/components/ui/NeonCard';
 
 interface ProjectDeepDiveProps {
   title: string;
-  emoji: string;
+  tagline: string;
   description: string[];
   forkGoals: string[];
-  color: 'cyan' | 'magenta';
+  tags: string[];
   repoUrl: string;
 }
 
-const ProjectDeepDive = ({ title, emoji, description, forkGoals, color, repoUrl }: ProjectDeepDiveProps) => {
+const ProjectDeepDive = ({ title, tagline, description, forkGoals, tags, repoUrl }: ProjectDeepDiveProps) => {
   return (
     <div className="relative min-h-screen">
       <SceneWrapper camera={{ position: [0, 0, 7], fov: 60 }}>
-        <ParticleField count={400} color={color === 'cyan' ? '#00FFFF' : '#FF00FF'} size={0.012} spread={18} speed={0.1} />
-        <FloatingGeometry position={[3, 1, -2]} geometry="icosahedron" color={color === 'cyan' ? '#00FFFF' : '#FF00FF'} size={1} speed={0.3} />
-        <FloatingGeometry position={[-3, -1, -3]} geometry="torus" color={color === 'cyan' ? '#FF00FF' : '#00FFFF'} size={0.5} speed={0.5} />
+        <ParticleField count={300} color="#3b82f6" size={0.008} spread={18} speed={0.06} />
+        <FloatingGeometry position={[4, 1, -4]} geometry="icosahedron" color="#3b82f6" size={0.7} speed={0.2} />
+        <FloatingGeometry position={[-4, -1, -5]} geometry="torus" color="#8b5cf6" size={0.4} speed={0.3} />
       </SceneWrapper>
 
-      <div className="relative z-10 max-w-4xl mx-auto px-4 py-20">
+      <div className="relative z-10 max-w-4xl mx-auto px-6 py-24">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <span className="font-pixel text-xs text-primary neon-text-cyan tracking-widest">{emoji} PROJECT DEEP DIVE</span>
-          <h1 className="font-orbitron font-bold text-3xl md:text-5xl text-foreground mt-4 mb-8">
-            <span className={color === 'cyan' ? 'text-primary neon-text-cyan' : 'text-secondary neon-text-magenta'}>{title}</span>
-          </h1>
+          <Link to="/projects" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-8 transition-colors">
+            <ArrowLeft className="w-4 h-4" />
+            All Projects
+          </Link>
+          <h1 className="font-display font-bold text-3xl md:text-5xl text-foreground mb-3 tracking-tight">{title}</h1>
+          <p className="text-lg text-muted-foreground mb-6">{tagline}</p>
+          <div className="flex flex-wrap gap-2 mb-10">
+            {tags.map(tag => (
+              <span key={tag} className="text-xs px-2.5 py-1 rounded-md bg-primary/10 text-primary">{tag}</span>
+            ))}
+          </div>
         </motion.div>
 
         <div className="space-y-4 mb-12">
           {description.map((p, i) => (
-            <motion.div key={i} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 + i * 0.2 }}>
-              <NeonCard color={color}>
-                <p className="font-mono text-sm text-foreground leading-relaxed">{p}</p>
+            <motion.div key={i} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.1 }}>
+              <NeonCard color={i % 2 === 0 ? 'cyan' : 'magenta'}>
+                <p className="text-sm text-muted-foreground leading-relaxed">{p}</p>
               </NeonCard>
             </motion.div>
           ))}
         </div>
 
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }}>
-          <h2 className="font-orbitron text-lg text-foreground mb-4">Fork Goals</h2>
-          <div className="space-y-2">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}>
+          <h2 className="font-display font-semibold text-lg text-foreground mb-4">Fork Goals & Roadmap</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">
             {forkGoals.map((goal, i) => (
-              <div key={i} className="flex gap-3 items-start">
-                <span className="text-primary font-pixel text-xs mt-1">→</span>
-                <p className="font-mono text-sm text-muted-foreground">{goal}</p>
+              <div key={i} className="flex items-center gap-3 text-sm text-muted-foreground glass rounded-lg px-4 py-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                {goal}
               </div>
             ))}
           </div>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.8 }} className="mt-8">
-          <a href={repoUrl} target="_blank" rel="noreferrer" className="inline-block font-pixel text-xs text-primary border border-primary/30 px-6 py-3 hover:bg-primary/10 pulse-glow transition-colors">
-            VIEW REPO →
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}>
+          <a
+            href={repoUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-medium rounded-xl hover:opacity-90 transition-opacity"
+          >
+            <ExternalLink className="w-4 h-4" />
+            View Repository
           </a>
         </motion.div>
       </div>
@@ -65,14 +80,14 @@ const ProjectDeepDive = ({ title, emoji, description, forkGoals, color, repoUrl 
 export const VortexPage = () => (
   <ProjectDeepDive
     title="Vortex AI Chat"
-    emoji="🧠"
+    tagline="An experiment in expressive interfaces with multiple AI models."
     description={[
-      'An experiment in expressive interfaces. Multiple models. One conversation space. Fast feedback loops.',
-      'UI motion is treated as information. Latency is exposed, not hidden. Errors are visible. The system explains itself.',
-      'Perfect playground for UI experiments — animation layers, sound-reactive UI, agent personalities.',
+      'Multiple models. One conversation space. Fast feedback loops. UI motion is treated as information — latency is exposed, not hidden.',
+      'Errors are visible. The system explains itself. Perfect playground for UI experiments with animation layers and agent personalities.',
+      'Sound-reactive UI elements respond to conversation intensity. Custom themes allow complete visual customization per agent.',
     ]}
     forkGoals={['Animation layers', 'Sound-reactive UI', 'Agent personalities', 'Custom themes']}
-    color="cyan"
+    tags={['GPT', 'Gemini', 'Real-time', 'Animation', 'Multi-model']}
     repoUrl="https://github.com/devflex-ai/vortex-ai-chat"
   />
 );
@@ -80,14 +95,14 @@ export const VortexPage = () => (
 export const CodingITPage = () => (
   <ProjectDeepDive
     title="CodingIT"
-    emoji="💻"
+    tagline="A response to over-engineered app builders. Local-first, zero telemetry."
     description={[
-      'A response to over-engineered app builders. Runs locally. Respects the filesystem. Produces artifacts you own.',
-      'No subscription logic baked in. No telemetry by default.',
-      'Local-first philosophy: if it works offline, it works everywhere.',
+      'Runs locally. Respects the filesystem. Produces artifacts you own. No subscription logic baked in.',
+      'No telemetry by default. Local-first philosophy: if it works offline, it works everywhere.',
+      'Clean CLI integration enables seamless developer workflows without context switching.',
     ]}
     forkGoals={['Performance optimization', 'Plugin system', 'Offline-first architecture', 'CLI integration']}
-    color="magenta"
+    tags={['Local-first', 'Open Source', 'CLI', 'Privacy', 'Developer Tools']}
     repoUrl="https://github.com/devflex-ai/codingit"
   />
 );
@@ -95,13 +110,13 @@ export const CodingITPage = () => (
 export const GeminiPage = () => (
   <ProjectDeepDive
     title="Gemini Next Chat"
-    emoji="💬"
+    tagline="Clean separation between model logic and UI. Easy self-hosting."
     description={[
-      'Clean separation between model logic and UI. Easy theming. Easy self-hosting.',
-      'Designed to disappear when not needed. Lightweight, focused, personal.',
+      'Easy theming. Easy self-hosting. Designed to disappear when not needed — lightweight, focused, personal.',
+      'Plugin architecture allows extending functionality without touching core code.',
     ]}
-    forkGoals={['Plugin system', 'Offline caching', 'Retro UI modes', 'Custom theming engine']}
-    color="cyan"
+    forkGoals={['Plugin system', 'Offline caching', 'Custom theming engine', 'Retro UI modes']}
+    tags={['Gemini', 'Self-hosted', 'Theming', 'Lightweight']}
     repoUrl="https://github.com/devflex-ai/gemini-next-chat"
   />
 );
@@ -109,13 +124,13 @@ export const GeminiPage = () => (
 export const LobePage = () => (
   <ProjectDeepDive
     title="Lobe Chat"
-    emoji="🤖"
+    tagline="Modular multi-AI chatbot with orchestration and memory layers."
     description={[
-      'Modular multi-AI chatbot supporting OpenAI, Claude, Gemini, and more.',
-      'Multi-model orchestration with agent memory layers and themed UIs.',
+      'Supports OpenAI, Claude, Gemini, and more. Multi-model orchestration with intelligent routing.',
+      'Agent memory layers enable contextual conversations that persist across sessions.',
     ]}
     forkGoals={['Local inference support', 'Agent memory layers', 'Themed UIs', 'Model routing optimization']}
-    color="magenta"
+    tags={['Multi-model', 'OpenAI', 'Claude', 'Orchestration', 'Plugins']}
     repoUrl="https://github.com/devflex-ai/lobe-chat"
   />
 );
@@ -123,13 +138,13 @@ export const LobePage = () => (
 export const StirlingPage = () => (
   <ProjectDeepDive
     title="Stirling-PDF"
-    emoji="📄"
+    tagline="Java PDF toolkit with AI document analysis extensions."
     description={[
-      'Java PDF toolkit for merging, splitting, converting, and more.',
-      'Extend with AI document analysis, OCR pipelines, or retro UI frontends.',
+      'Merging, splitting, converting, and more — a complete PDF processing pipeline.',
+      'Extended with AI document analysis, OCR pipelines, and automation workflows.',
     ]}
     forkGoals={['AI document analysis', 'OCR pipelines', 'Automation workflows', 'Batch CLI wrapper', 'Plugin system']}
-    color="cyan"
+    tags={['Java', 'PDF', 'OCR', 'Automation', 'Document AI']}
     repoUrl="https://github.com/devflex-ai/stirling-pdf"
   />
 );
