@@ -1,46 +1,45 @@
 import { motion } from 'framer-motion';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, ArrowRight } from 'lucide-react';
 import SceneWrapper from '@/components/3d/SceneWrapper';
 import ParticleField from '@/components/3d/ParticleField';
 import FloatingGeometry from '@/components/3d/FloatingGeometry';
-import NeonCard from '@/components/ui/NeonCard';
 import { Link } from 'react-router-dom';
 
 const projects = [
   {
     name: 'Vortex AI Chat',
-    desc: 'Neon-chaotic GPT + Gemini chat UI',
+    desc: 'An experiment in expressive interfaces. Multiple AI models, one conversation space, fast feedback loops.',
+    tags: ['GPT', 'Gemini', 'Animation', 'Real-time'],
     repo: 'https://github.com/devflex-ai/vortex-ai-chat',
     link: '/projects/vortex',
-    color: 'cyan' as const,
   },
   {
     name: 'CodingIT',
-    desc: 'Local AI app builder — open-source, fast, private',
+    desc: 'Local AI app builder — open-source, fast, private. Respects the filesystem. Produces artifacts you own.',
+    tags: ['Local-first', 'Open Source', 'CLI', 'Privacy'],
     repo: 'https://github.com/devflex-ai/codingit',
     link: '/projects/codingit',
-    color: 'magenta' as const,
   },
   {
     name: 'Gemini Next Chat',
-    desc: 'Self-host your own Gemini chatbot',
+    desc: 'Self-host your own Gemini chatbot with clean separation between model logic and UI.',
+    tags: ['Gemini', 'Self-hosted', 'Theming'],
     repo: 'https://github.com/devflex-ai/gemini-next-chat',
     link: '/projects/gemini',
-    color: 'cyan' as const,
   },
   {
     name: 'Lobe Chat',
-    desc: 'Modular multi-AI chatbot (OpenAI, Claude, Gemini…)',
+    desc: 'Modular multi-AI chatbot supporting OpenAI, Claude, Gemini — with agent memory layers.',
+    tags: ['Multi-model', 'Orchestration', 'Plugins'],
     repo: 'https://github.com/devflex-ai/lobe-chat',
     link: '/projects/lobe',
-    color: 'magenta' as const,
   },
   {
     name: 'Stirling-PDF',
-    desc: 'Java PDF toolkit for merging, splitting, and more',
+    desc: 'Java PDF toolkit for merging, splitting, converting. Extended with AI document analysis.',
+    tags: ['Java', 'PDF', 'OCR', 'Automation'],
     repo: 'https://github.com/devflex-ai/stirling-pdf',
     link: '/projects/stirling',
-    color: 'cyan' as const,
   },
 ];
 
@@ -48,53 +47,73 @@ const ProjectsOverviewPage = () => {
   return (
     <div className="relative min-h-screen">
       <SceneWrapper camera={{ position: [0, 0, 8], fov: 60 }}>
-        <ParticleField count={500} color="#00FFFF" size={0.012} spread={20} speed={0.1} />
-        <ParticleField count={200} color="#FF00FF" size={0.008} spread={15} speed={0.15} />
+        <ParticleField count={400} color="#3b82f6" size={0.008} spread={20} speed={0.06} />
+        <ParticleField count={150} color="#8b5cf6" size={0.006} spread={15} speed={0.08} />
         {projects.map((_, i) => {
           const angle = (i / projects.length) * Math.PI * 2;
           return (
             <FloatingGeometry
               key={i}
-              position={[Math.cos(angle) * 4, Math.sin(angle) * 2, -3]}
+              position={[Math.cos(angle) * 5, Math.sin(angle) * 2.5, -5]}
               geometry="octahedron"
-              color={i % 2 === 0 ? '#00FFFF' : '#FF00FF'}
-              size={0.4}
-              speed={0.3 + i * 0.1}
+              color={i % 2 === 0 ? '#3b82f6' : '#8b5cf6'}
+              size={0.3}
+              speed={0.2 + i * 0.05}
             />
           );
         })}
       </SceneWrapper>
 
-      <div className="relative z-10 max-w-5xl mx-auto px-4 py-20">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <span className="font-pixel text-xs text-primary neon-text-cyan tracking-widest">⭐ HIGH SCORES</span>
-          <h1 className="font-orbitron font-bold text-3xl md:text-5xl text-foreground mt-4 mb-12">
-            Featured <span className="text-primary neon-text-cyan">Projects</span>
+      <div className="relative z-10 max-w-5xl mx-auto px-6 py-24">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-12">
+          <p className="text-sm font-medium text-primary mb-3 tracking-wide uppercase">Projects</p>
+          <h1 className="font-display font-bold text-3xl md:text-5xl text-foreground mb-4 tracking-tight">
+            Featured <span className="gradient-text">Work</span>
           </h1>
+          <p className="text-muted-foreground max-w-xl">Open-source tools built with intent — each solving a real problem with precision engineering.</p>
         </motion.div>
 
-        <div className="space-y-6">
+        <div className="space-y-4">
           {projects.map((project, i) => (
             <motion.div
               key={project.name}
-              initial={{ opacity: 0, x: i % 2 === 0 ? -40 : 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 * i, duration: 0.5 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 * i }}
             >
-              <NeonCard color={project.color} className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                <div>
-                  <h2 className="font-orbitron font-bold text-lg text-foreground mb-1">{project.name}</h2>
-                  <p className="font-mono text-sm text-muted-foreground">{project.desc}</p>
+              <div className="glass rounded-xl p-6 hover:border-primary/20 transition-all group">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                  <div className="flex-1">
+                    <h2 className="font-display font-semibold text-lg text-foreground mb-1 group-hover:text-primary transition-colors">
+                      {project.name}
+                    </h2>
+                    <p className="text-sm text-muted-foreground mb-3">{project.desc}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags.map(tag => (
+                        <span key={tag} className="text-xs px-2.5 py-1 rounded-md bg-muted text-muted-foreground">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 flex-shrink-0">
+                    <Link
+                      to={project.link}
+                      className="flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+                    >
+                      Details <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                    <a
+                      href={project.repo}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+                  </div>
                 </div>
-                <div className="flex gap-3">
-                  <Link to={project.link} className="font-pixel text-xs text-primary hover:neon-text-cyan transition-all px-4 py-2 border border-primary/30 hover:border-primary">
-                    DEEP DIVE →
-                  </Link>
-                  <a href={project.repo} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                </div>
-              </NeonCard>
+              </div>
             </motion.div>
           ))}
         </div>

@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import SceneWrapper from '@/components/3d/SceneWrapper';
 import ParticleField from '@/components/3d/ParticleField';
 import FloatingGeometry from '@/components/3d/FloatingGeometry';
+import NeonCard from '@/components/ui/NeonCard';
 
 const mantras = [
   'INSERT COIN',
@@ -14,27 +15,26 @@ const mantras = [
 ];
 
 const commitments = [
-  'Retro is not a filter.',
-  'It is pixel certainty.',
-  'Hard edges.',
-  'Clear affordances.',
-  'Modern tools wrapped in familiar shapes feel trustworthy.',
+  { title: 'Pixel Certainty', desc: 'Every element has a clear, defined boundary.' },
+  { title: 'Hard Edges', desc: 'Crisp interfaces that communicate with precision.' },
+  { title: 'Clear Affordances', desc: 'Users should never guess what\'s interactive.' },
+  { title: 'Trustworthy Design', desc: 'Modern tools wrapped in familiar shapes feel reliable.' },
 ];
 
 const RetroMantrasPage = () => (
   <div className="relative min-h-screen">
     <SceneWrapper camera={{ position: [0, 0, 8], fov: 60 }}>
-      <ParticleField count={800} color="#00FFFF" size={0.015} spread={25} speed={0.15} />
-      <ParticleField count={400} color="#FF00FF" size={0.01} spread={20} speed={0.1} />
+      <ParticleField count={500} color="#3b82f6" size={0.008} spread={25} speed={0.08} />
+      <ParticleField count={200} color="#8b5cf6" size={0.006} spread={20} speed={0.06} />
       {mantras.map((_, i) => (
-        <FloatingGeometry key={i} position={[(i - 3) * 1.5, Math.sin(i * 0.8) * 2, -4]} geometry="box" color={i % 2 === 0 ? '#00FFFF' : '#FF00FF'} size={0.25} speed={0.5 + i * 0.05} />
+        <FloatingGeometry key={i} position={[(i - 3) * 1.5, Math.sin(i * 0.8) * 2, -6]} geometry="box" color={i % 2 === 0 ? '#3b82f6' : '#8b5cf6'} size={0.2} speed={0.3 + i * 0.03} />
       ))}
     </SceneWrapper>
-    <div className="relative z-10 max-w-3xl mx-auto px-4 py-20 text-center">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-        <span className="font-pixel text-xs text-primary neon-text-cyan tracking-widest">🎮 ARCADE MODE</span>
-        <h1 className="font-orbitron font-bold text-3xl md:text-5xl text-foreground mt-4 mb-16">
-          Retro <span className="text-primary neon-text-cyan">Mantras</span>
+    <div className="relative z-10 max-w-3xl mx-auto px-6 py-24 text-center">
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-16">
+        <p className="text-sm font-medium text-primary mb-3 tracking-wide uppercase">Mindset</p>
+        <h1 className="font-display font-bold text-3xl md:text-5xl text-foreground mb-4 tracking-tight">
+          Code <span className="gradient-text">Mantras</span>
         </h1>
       </motion.div>
 
@@ -42,22 +42,25 @@ const RetroMantrasPage = () => (
         {mantras.map((m, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, scale: 0.5 }}
+            initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 * i, type: 'spring', stiffness: 200 }}
+            transition={{ delay: 0.15 * i, type: 'spring', stiffness: 200 }}
           >
-            <span className={`font-pixel text-lg md:text-2xl ${i % 2 === 0 ? 'text-primary neon-text-cyan' : 'text-secondary neon-text-magenta'}`}>
+            <span className={`font-display font-bold text-xl md:text-3xl tracking-wide ${i % 2 === 0 ? 'text-primary' : 'text-secondary'}`}>
               {m}
             </span>
           </motion.div>
         ))}
       </div>
 
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2 }}>
-        <h2 className="font-orbitron text-lg text-secondary neon-text-magenta mb-6">Aesthetic Commitments</h2>
-        <div className="space-y-3">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}>
+        <h2 className="font-display font-semibold text-lg text-foreground mb-6">Aesthetic Commitments</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
           {commitments.map((c, i) => (
-            <p key={i} className="font-mono text-sm text-muted-foreground">{c}</p>
+            <NeonCard key={i} color={i % 2 === 0 ? 'cyan' : 'magenta'}>
+              <h3 className="font-display font-semibold text-sm text-foreground mb-1">{c.title}</h3>
+              <p className="text-xs text-muted-foreground">{c.desc}</p>
+            </NeonCard>
           ))}
         </div>
       </motion.div>

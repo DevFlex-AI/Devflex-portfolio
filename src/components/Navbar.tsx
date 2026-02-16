@@ -1,54 +1,54 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Gamepad2 } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
+import devflexAvatar from '@/assets/devflex-avatar.png';
 
 const navGroups = [
   {
-    label: 'Main',
+    label: 'About',
     links: [
-      { to: '/', label: '🎮 Home' },
-      { to: '/about', label: '🌀 About' },
-      { to: '/story', label: '🕹️ Story' },
+      { to: '/about', label: 'About Me' },
+      { to: '/story', label: 'My Story' },
+      { to: '/philosophy', label: 'Values' },
     ],
   },
   {
-    label: 'Tech',
+    label: 'Skills',
     links: [
-      { to: '/tech-languages', label: '🧪 Languages' },
-      { to: '/tech-frameworks', label: '🔧 Frameworks' },
+      { to: '/tech-languages', label: 'Languages' },
+      { to: '/tech-frameworks', label: 'Frameworks' },
     ],
   },
   {
     label: 'Projects',
     links: [
-      { to: '/projects', label: '⭐ Overview' },
-      { to: '/projects/vortex', label: 'Vortex AI' },
+      { to: '/projects', label: 'All Projects' },
+      { to: '/projects/vortex', label: 'Vortex AI Chat' },
       { to: '/projects/codingit', label: 'CodingIT' },
-      { to: '/projects/gemini', label: 'Gemini Chat' },
+      { to: '/projects/gemini', label: 'Gemini Next Chat' },
       { to: '/projects/lobe', label: 'Lobe Chat' },
       { to: '/projects/stirling', label: 'Stirling-PDF' },
     ],
   },
   {
-    label: 'Philosophy',
+    label: 'Engineering',
     links: [
-      { to: '/design-philosophy', label: '🎨 Design' },
-      { to: '/smack-sh', label: '🏢 SMACK-SH' },
-      { to: '/principles', label: '🧩 Principles' },
-      { to: '/architecture', label: '🔧 Architecture' },
-      { to: '/philosophy', label: '🧭 Values' },
+      { to: '/design-philosophy', label: 'Design Philosophy' },
+      { to: '/smack-sh', label: 'SMACK-SH' },
+      { to: '/principles', label: 'Principles' },
+      { to: '/architecture', label: 'Architecture' },
+      { to: '/fork-strategy', label: 'Fork Strategy' },
     ],
   },
   {
     label: 'More',
     links: [
-      { to: '/github-stats', label: '📊 Stats' },
-      { to: '/fork-strategy', label: '🧠 Forks' },
-      { to: '/builder-log', label: '📓 Log' },
-      { to: '/retro-mantras', label: '🎮 Mantras' },
-      { to: '/contact', label: '📫 Contact' },
+      { to: '/github-stats', label: 'GitHub Stats' },
+      { to: '/builder-log', label: 'Builder Log' },
+      { to: '/retro-mantras', label: 'Mantras' },
+      { to: '/contact', label: 'Contact' },
     ],
   },
 ];
@@ -58,43 +58,51 @@ const Navbar = () => {
   const location = useLocation();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-primary/20 bg-background/90 backdrop-blur-md">
-      <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 font-orbitron font-bold text-primary neon-text-cyan text-sm">
-          <Gamepad2 className="w-5 h-5" />
-          DEVFLEX-AI
+    <nav className="fixed top-0 left-0 right-0 z-50 glass-strong">
+      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+        <Link to="/" className="flex items-center gap-3">
+          <img src={devflexAvatar} alt="DevFlex-AI" className="w-8 h-8 rounded-full ring-1 ring-primary/30" />
+          <span className="font-display font-bold text-foreground text-base tracking-tight">
+            DevFlex<span className="text-primary">-AI</span>
+          </span>
         </Link>
 
         {/* Desktop */}
         <div className="hidden lg:flex items-center gap-1">
           {navGroups.map((g) => (
             <div key={g.label} className="group relative">
-              <button className="px-3 py-2 text-xs font-orbitron text-muted-foreground hover:text-primary transition-colors">
+              <button className="flex items-center gap-1 px-3 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors rounded-md">
                 {g.label}
+                <ChevronDown className="w-3 h-3 opacity-50" />
               </button>
-              <div className="absolute top-full left-0 hidden group-hover:flex flex-col bg-card border border-primary/20 neon-border-cyan min-w-[180px] py-1 z-50">
-                {g.links.map((l) => (
-                  <Link
-                    key={l.to}
-                    to={l.to}
-                    className={cn(
-                      'px-4 py-2 text-xs font-mono hover:bg-primary/10 hover:text-primary transition-colors',
-                      location.pathname === l.to && 'text-primary bg-primary/5'
-                    )}
-                  >
-                    {l.label}
-                  </Link>
-                ))}
+              <div className="absolute top-full left-0 pt-2 hidden group-hover:block">
+                <div className="glass-strong rounded-lg min-w-[200px] py-2 shadow-2xl">
+                  {g.links.map((l) => (
+                    <Link
+                      key={l.to}
+                      to={l.to}
+                      className={cn(
+                        'block px-4 py-2.5 text-sm hover:bg-muted/50 hover:text-foreground transition-colors',
+                        location.pathname === l.to ? 'text-primary' : 'text-muted-foreground'
+                      )}
+                    >
+                      {l.label}
+                    </Link>
+                  ))}
+                </div>
               </div>
             </div>
           ))}
+          <Link
+            to="/contact"
+            className="ml-4 px-5 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity"
+          >
+            Contact
+          </Link>
         </div>
 
         {/* Mobile toggle */}
-        <button
-          onClick={() => setOpen(!open)}
-          className="lg:hidden text-primary p-2"
-        >
+        <button onClick={() => setOpen(!open)} className="lg:hidden text-foreground p-2">
           {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
       </div>
@@ -106,12 +114,12 @@ const Navbar = () => {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="lg:hidden overflow-hidden border-t border-primary/20 bg-background/95 backdrop-blur-md"
+            className="lg:hidden overflow-hidden glass-strong border-t border-border"
           >
-            <div className="max-h-[80vh] overflow-y-auto py-4 px-4 space-y-4">
+            <div className="max-h-[80vh] overflow-y-auto py-6 px-6 space-y-6">
               {navGroups.map((g) => (
                 <div key={g.label}>
-                  <div className="text-xs font-orbitron text-muted-foreground mb-2">{g.label}</div>
+                  <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-3">{g.label}</div>
                   <div className="space-y-1">
                     {g.links.map((l) => (
                       <Link
@@ -119,8 +127,8 @@ const Navbar = () => {
                         to={l.to}
                         onClick={() => setOpen(false)}
                         className={cn(
-                          'block px-3 py-2 text-sm font-mono hover:text-primary transition-colors',
-                          location.pathname === l.to && 'text-primary neon-text-cyan'
+                          'block px-3 py-2.5 text-sm rounded-md hover:bg-muted/50 transition-colors',
+                          location.pathname === l.to ? 'text-primary' : 'text-foreground'
                         )}
                       >
                         {l.label}
