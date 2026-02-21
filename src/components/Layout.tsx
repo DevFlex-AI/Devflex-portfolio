@@ -4,6 +4,7 @@ import { AnimatePresence } from 'framer-motion';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import PageTransition from './PageTransition';
+import AIChatWidget from './AIChatWidget';
 
 const Layout = ({ children }: { children: ReactNode }) => {
   const location = useLocation();
@@ -19,6 +20,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
         </AnimatePresence>
       </main>
       <Footer />
+      <AIChatWidget />
     </div>
   );
 };

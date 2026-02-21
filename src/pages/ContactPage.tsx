@@ -32,41 +32,39 @@ const ContactPage = () => {
     setSending(true);
 
     try {
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-      if (!supabaseUrl || !supabaseAnonKey) {
-        throw new Error('Configuration error');
-      }
-
-      const response = await fetch(`${supabaseUrl}/functions/v1/contact-form`, {
+      // Using Formsubmit.co — free, no API key, no login required
+      const response = await fetch('https://formsubmit.co/ajax/mahirusus@gmail.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${supabaseAnonKey}`,
+          'Accept': 'application/json',
         },
-        body: JSON.stringify({ name, email, message }),
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+          _subject: `Portfolio Contact: ${name}`,
+        }),
       });
 
       const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to send message');
+      if (data.success === 'true' || data.success === true || response.ok) {
+        toast({
+          title: 'Message Sent',
+          description: "Thanks for reaching out. I'll get back to you soon."
+        });
+        setName('');
+        setEmail('');
+        setMessage('');
+      } else {
+        throw new Error('Failed to send');
       }
-
-      toast({
-        title: 'Message Sent',
-        description: "Thanks for reaching out. I'll get back to you soon."
-      });
-
-      setName('');
-      setEmail('');
-      setMessage('');
     } catch (error) {
       console.error('Contact form error:', error);
       toast({
         title: 'Error',
-        description: 'Failed to send message. Please try again or email directly at mahirusus@gmail.com',
+        description: 'Failed to send message. Please email directly at mahirusus@gmail.com',
         variant: 'destructive'
       });
     } finally {

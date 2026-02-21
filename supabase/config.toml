@@ -1,0 +1,7 @@
+project_id = "kxylepzdrdgrhdmcekxl"
+
+[functions.portfolio-agent]
+verify_jwt = false
+
+[functions.contact-form]
+verify_jwt = false
