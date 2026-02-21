@@ -11,6 +11,7 @@ const navGroups = [
     links: [
       { to: '/about', label: 'About Me' },
       { to: '/story', label: 'My Story' },
+      { to: '/resume', label: 'Resume' },
       { to: '/philosophy', label: 'Values' },
     ],
   },
