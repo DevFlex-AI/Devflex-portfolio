@@ -21,6 +21,7 @@ import BuilderLogPage from "./pages/BuilderLogPage";
 import RetroMantrasPage from "./pages/RetroMantrasPage";
 import ContactPage from "./pages/ContactPage";
 import PhilosophyPage from "./pages/PhilosophyPage";
+import ResumePage from "./pages/ResumePage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -54,6 +55,8 @@ const App = () => (
             <Route path="/retro-mantras" element={<RetroMantrasPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/philosophy" element={<PhilosophyPage />} />
+            <Route path="/resume" element={<ResumePage />} />
+            <Route path="*" element={<NotFound />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>
