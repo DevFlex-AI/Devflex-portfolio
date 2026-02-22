@@ -4,6 +4,7 @@ import { Menu, X, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import devflexAvatar from '@/assets/devflex-avatar.png';
+import ThemeToggle from './ThemeToggle';
 
 const navGroups = [
   {
@@ -94,9 +95,10 @@ const Navbar = () => {
               </div>
             </div>
           ))}
+          <ThemeToggle />
           <Link
             to="/contact"
-            className="ml-4 px-5 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity"
+            className="ml-2 px-5 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity"
           >
             Contact
           </Link>

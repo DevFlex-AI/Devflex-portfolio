@@ -5,7 +5,8 @@ import ReactMarkdown from 'react-markdown';
 
 type Message = { role: 'user' | 'assistant'; content: string };
 
-const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/portfolio-agent`;
+const SUPABASE_URL = 'https://kxylepzdrdgrhdmcekxl.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt4eWxlcHpkcmRncmhkbWNla3hsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE3MTM3OTAsImV4cCI6MjA4NzI4OTc5MH0.YNnUi9vSnzFvORAv46k46AbzQV6ybNrTc3pjUudDDgU';
 
 async function streamChat({
   messages,
@@ -19,11 +20,12 @@ async function streamChat({
   onError: (error: string) => void;
 }) {
   try {
-    const resp = await fetch(CHAT_URL, {
+    const resp = await fetch(`${SUPABASE_URL}/functions/v1/portfolio-agent`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        Authorization: `Bearer ${SUPABASE_KEY}`,
+        apikey: SUPABASE_KEY,
       },
       body: JSON.stringify({ messages }),
     });
